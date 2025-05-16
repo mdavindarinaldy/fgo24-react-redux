@@ -3,11 +3,16 @@ import Input from '../components/Input'
 import { useForm } from 'react-hook-form'
 
 function HomePage() {
-  const {register, handleSubmit, watch} = useForm()
+  const {register, handleSubmit, watch, formState: { errors }} = useForm()
   const [isSubmitted, setIsSubmitted] = useState(false)
   const watchSmoker = watch('smoker')
 
   function submitData(value) {
+    const sanitizedValue = {
+        ...value,
+        name: value.name.trim(), 
+        cigar: value.smoker === 'Tidak' ? [] : value.cigar || [], 
+    }
     const formData = JSON.parse(localStorage.getItem('formData')) || []
     const newData = [...formData, value]
     localStorage.setItem('formData', JSON.stringify(newData))
@@ -24,16 +29,16 @@ function HomePage() {
             </div>
             <form id='form' onSubmit={handleSubmit(submitData)} className='flex flex-col gap-2'>
                 <div className='h-fit bg-white rounded-t-lg border-l-10 border-purple-300 p-5 flex flex-col gap-3'>
-                    <Input {...register("name")} type="text" id="name" label="Siapakah nama Anda?" className='w-full'/>
+                    <Input {...register("name", {required: 'Nama wajib diisi'})} type="text" id="name" label="Siapakah nama Anda?" className='w-full' error={errors.name}/>
                 </div>
                 <div className='h-fit bg-white border-l-10 border-purple-300 p-5 flex flex-col gap-3'>
-                    <Input {...register("age")} type="number" id="age" label="Berapakah umur Anda?" className='w-full'/>
+                    <Input {...register("age", {required: 'Umur wajib diisi'}) } type="number" id="age" label="Berapakah umur Anda?" className='w-full' error={errors.age}/>
                 </div>
                 <div className='h-fit bg-white border-l-10 border-purple-300 p-5 flex flex-col gap-3'>
-                    <Input {...register("gender")} type="radio" id="gender" options={['Laki-laki','Perempuan']} label="Apa jenis kelamin Anda?" className='flex flex-row gap-2 items-center'/>
+                    <Input {...register("gender", {required: 'Jenis kelamin harus dipilih salah satu'})} type="radio" id="gender" options={['Laki-laki','Perempuan']} label="Apa jenis kelamin Anda?" className='flex flex-row gap-2 items-center' error={errors.gender}/>
                 </div>
                 <div className='h-fit bg-white border-l-10 border-purple-300 p-5 flex flex-col gap-3'>                
-                    <Input {...register("smoker")} type="radio" id="smoker" options={['Ya','Tidak']} label="Apakah Anda perokok?" className='flex flex-row gap-2 items-center'/>
+                    <Input {...register("smoker", {required: 'Jawaban pertanyaan ini harus dipilih salah satu'})} type="radio" id="smoker" options={['Ya','Tidak']} label="Apakah Anda perokok?" className='flex flex-row gap-2 items-center' error={errors.smoker}/>
                 </div>
                 <div className='h-fit bg-white border-l-10 border-purple-300 p-5 flex flex-col gap-3'>
                     <Input {...register("cigar")} type="checkbox" id="cigar" options={['Gudang Garam Filter','Lucky Strike','Marlboro','Esse']} label="Apa merk rokok yang sudah pernah Anda coba?" className='flex flex-row gap-2 items-center' disabled={watchSmoker === 'Tidak'}/>

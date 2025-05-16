@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Input({id, label, type, className, options, disabled, ...props}) {
+function Input({id, label, type, className, options, disabled, error, ...props}) {
   const baseStyle = 'h-12 bg-gray-50 rounded px-5 hover:border-b-5 border-purple-300 focus:outline-0'
   if(type==='checkbox') {
     return (
@@ -13,6 +13,7 @@ function Input({id, label, type, className, options, disabled, ...props}) {
                 </div>
                 )
             )}
+            {error && <span className="text-red-500 text-sm">{error.message}</span>}
         </div>
       )
   }
@@ -28,6 +29,7 @@ function Input({id, label, type, className, options, disabled, ...props}) {
                     </div>
                 ))}
             </div>
+            {error && <span className="text-red-500 text-sm">{error.message}</span>}
         </div>
       )
   }
@@ -37,6 +39,7 @@ function Input({id, label, type, className, options, disabled, ...props}) {
         <div>
             <input type={type} id={id} className={[baseStyle, className].join(" ")} {...props} autoComplete='off'/>
         </div>
+        {error && <span className="text-red-500 text-sm">{error.message}</span>}
     </div>
   )
 }
