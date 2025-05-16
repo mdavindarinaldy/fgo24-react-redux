@@ -23,10 +23,9 @@ function Result() {
                 </thead>
                 <tbody>
                     {formData.map((data,index) => {
-                        let cigar = ''
-                        data.cigar.forEach((item)=>(cigar+=item+' '))
+                        const cigar = Array.isArray(data.cigar) && data.cigar.length > 0 ? data.cigar.join(', ') : '-';
                         return (
-                            <tr className='border-2 text-center'>
+                            <tr key={`table-row-${index+1}`} className='border-2 text-center'>
                             <td className='border-2'>{index+1}</td>
                             <td className='border-2'>{data.name}</td>
                             <td className='border-2'>{data.age}</td>

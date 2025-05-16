@@ -3,8 +3,9 @@ import Input from '../components/Input'
 import { useForm } from 'react-hook-form'
 
 function HomePage() {
-  const {register, handleSubmit} = useForm()
+  const {register, handleSubmit, watch} = useForm()
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const watchSmoker = watch('smoker')
 
   function submitData(value) {
     const formData = JSON.parse(localStorage.getItem('formData')) || []
@@ -35,7 +36,7 @@ function HomePage() {
                     <Input {...register("smoker")} type="radio" id="smoker" options={['Ya','Tidak']} label="Apakah Anda perokok?" className='flex flex-row gap-2 items-center'/>
                 </div>
                 <div className='h-fit bg-white border-l-10 border-purple-300 p-5 flex flex-col gap-3'>
-                    <Input {...register("cigar")} type="checkbox" id="cigar" options={['Gudang Garam Filter','Lucky Strike','Marlboro','Esse']} label="Apa merk rokok yang sudah pernah Anda coba?" className='flex flex-row gap-2 items-center'/>
+                    <Input {...register("cigar")} type="checkbox" id="cigar" options={['Gudang Garam Filter','Lucky Strike','Marlboro','Esse']} label="Apa merk rokok yang sudah pernah Anda coba?" className='flex flex-row gap-2 items-center' disabled={watchSmoker === 'Tidak'}/>
                 </div>
                 <div className='h-fit bg-white rounded-b-lg border-l-10 border-purple-300 p-5 box-border flex flex-col gap-5'>
                     <button className='bg-blue-700 rounded-lg text-white py-2 px-5 hover:cursor-pointer w-[10svw]'>Submit</button>

@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Input({id, label, type, className, options, ...props}) {
+function Input({id, label, type, className, options, disabled, ...props}) {
   const baseStyle = 'h-12 bg-gray-50 rounded px-5 hover:border-b-5 border-purple-300 focus:outline-0'
   if(type==='checkbox') {
     return (
@@ -8,7 +8,7 @@ function Input({id, label, type, className, options, ...props}) {
             <span  className='block font-medium'>{label}</span>
             {options.map((item,index) => (
                 <div key={(id+index)} className='flex items-center gap-2'>
-                    <input name={id} type={type} value={item} id={(id+'-'+item)} {...props} className='h-4 w-4' autoComplete='off'/>
+                    <input name={id} type={type} value={item} id={(id+'-'+item)} {...props} className='h-4 w-4' autoComplete='off' disabled={disabled}/>
                     <label htmlFor={(id+'-'+item)}>{item}</label>
                 </div>
                 )
