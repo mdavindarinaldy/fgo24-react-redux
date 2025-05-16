@@ -1,14 +1,17 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Input from '../components/Input'
 import { useForm } from 'react-hook-form'
 
 function HomePage() {
   const {register, handleSubmit} = useForm()
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
   function submitData(value) {
-    const formData = JSON.parse(localStorage.getItem('formData')) || [];
-    const newData = [...formData, value];
-    localStorage.setItem('formData', JSON.stringify(newData));
+    const formData = JSON.parse(localStorage.getItem('formData')) || []
+    const newData = [...formData, value]
+    localStorage.setItem('formData', JSON.stringify(newData))
+    setIsSubmitted(true)
+    setTimeout(() => setIsSubmitted(false), 1000)
     document.getElementById('form').reset()
   }
 
@@ -36,7 +39,7 @@ function HomePage() {
                 </div>
                 <div className='h-fit bg-white rounded-b-lg border-l-10 border-purple-300 p-5 box-border flex flex-col gap-5'>
                     <button className='bg-blue-700 rounded-lg text-white py-2 px-5 hover:cursor-pointer w-[10svw]'>Submit</button>
-                    <span className='text-green-400 text-sm font-bold hidden'>*Data berhasil disimpan</span>
+                    <span className={`text-green-400 text-sm font-bold ${isSubmitted ? '' : 'hidden'}`}>*Data berhasil disimpan</span>
                 </div>
             </form>
         </div>
