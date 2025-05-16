@@ -32,7 +32,7 @@ function HomePage() {
                     <Input {...register("name", {required: 'Nama wajib diisi'})} type="text" id="name" label="Siapakah nama Anda?" className='w-full' error={errors.name}/>
                 </div>
                 <div className='h-fit bg-white border-l-10 border-purple-300 p-5 flex flex-col gap-3'>
-                    <Input {...register("age", {required: 'Umur wajib diisi'}) } type="number" id="age" label="Berapakah umur Anda?" className='w-full' error={errors.age}/>
+                    <Input {...register("age", {required: 'Umur wajib diisi'})} type="number" id="age" label="Berapakah umur Anda?" className='w-full' error={errors.age} min='0'/>
                 </div>
                 <div className='h-fit bg-white border-l-10 border-purple-300 p-5 flex flex-col gap-3'>
                     <Input {...register("gender", {required: 'Jenis kelamin harus dipilih salah satu'})} type="radio" id="gender" options={['Laki-laki','Perempuan']} label="Apa jenis kelamin Anda?" className='flex flex-row gap-2 items-center' error={errors.gender}/>
