@@ -1,5 +1,29 @@
 import React from 'react'
 
+/**
+ * @typedef {Object} InputProps
+ * @property {string} id Identifier
+ * @property {string} label Label for the input
+ * @property {'text' | 'number' | 'checkbox' | 'radio'} type Input types
+ * @property {string} [className] Tailwind CSS classes
+ * @property {string[]} [options] Options for checkbox/radio inputs
+ * @property {boolean} [disabled] Disabled checkbox input
+ * @property {React.InputHTMLAttributes<HTMLInputElement>} [props]
+ */
+
+/**
+ *
+ * @param {InputProps} props
+ * @param {string} props.id Identifier
+ * @param {string} props.label Label for the input
+ * @param {'text' | 'number' | 'checkbox' | 'radio'} props.type Input types
+ * @param {string} [props.className] Tailwind CSS classes
+ * @param {string[]} [props.options] Options for checkbox/radio inputs
+ * @param {boolean} [props.disabled] Disables input (checkbox only)
+ * @param {React.InputHTMLAttributes<HTMLInputElement>} [props]
+ * @returns
+ */
+
 function Input({id, label, type, className, options, disabled, error, ...props}) {
   const baseStyle = 'h-12 bg-gray-50 rounded px-5 hover:border-b-5 border-purple-300 focus:outline-0'
   if(type==='checkbox') {
