@@ -1,12 +1,29 @@
-# React + Vite
+# Basic React Project Form
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is for training only. Through this project, we learn to create input form web pages and display the result from user's input with a table. This project implement React-Hook, React-Router-DOM and React-Hook-Form.
 
-Currently, two official plugins are available:
+## Preview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Preview](./preview.png)
 
-## Expanding the ESLint configuration
+## How to Run this Project
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Clone this project
+```
+git clone https://github.com/mdavindarinaldy/fgo24-react-form.git
+```
+2. Install dependencies
+```
+npm install
+``` 
+3. Run the project
+```
+npm run dev
+```
+4. Project will running on http://localhost:5173
+
+## Dependencies
+This project using node.js to run, make sure to install node on your machine. Other than that, this project also using Vite, React, React Hook, React Hook Form, React Router DOM and ESLint.
+
+## Basic Information
+This project is part of training in Kodacademy Bootcamp Batch 24 made by Muhammad Davinda Rinaldy
