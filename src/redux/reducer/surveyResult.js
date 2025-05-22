@@ -35,9 +35,7 @@ const surveyResult = createSlice({
     initialState,
     reducers: {
         addData: function(state, action) {
-            const id = state.data.length+1
             state.data.push({
-                id, 
                 ...action.payload
             })
             return state
