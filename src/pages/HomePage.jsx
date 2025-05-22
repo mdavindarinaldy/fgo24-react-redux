@@ -3,15 +3,41 @@ import Input from '../components/Input'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { addData } from '../redux/reducer/surveyResult'
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const validationSchema = yup.object({
+    name: yup.string().min(3, "Nama minimal 3 karakter").required("Nama harus diisi"),
+    age: yup
+      .number()
+      .typeError("Umur harus berupa angka")
+      .required("Umur harus diisi"),
+    gender: yup.mixed().oneOf(["Laki-laki", "Perempuan"]).required("Jenis kelamin harus dipilih"),
+    smoker: yup.mixed().oneOf(["Ya", "Tidak"]).required("Jawaban wajib dipilih salah satu"),
+    cigars: yup.array().notRequired(),
+});
 
 function HomePage() {
-  const {register, handleSubmit, watch, formState: { errors }} = useForm()
+  const {register, handleSubmit, watch, formState: { errors }} = useForm({
+    resolver: yupResolver(validationSchema)
+  })
   const [isSubmitted, setIsSubmitted] = useState(false)
   const watchSmoker = watch('smoker')
   const dispatch = useDispatch()
 
   function submitData(value) {
-    dispatch(addData(value))
+    let sanitizedAge = 0
+    if (value.age<0) { sanitizedAge = -1 * value.age}
+    else { sanitizedAge = value.age}
+
+    const sanitizedValue = {
+        ...value,
+        name: value.name.trim(), 
+        age: sanitizedAge,
+        cigar: value.smoker === 'Tidak' ? [] : value.cigar || [], 
+    }
+
+    dispatch(addData(sanitizedValue))
     setIsSubmitted(true)
     setTimeout(() => setIsSubmitted(false), 1000)
     document.getElementById('form').reset()
@@ -25,16 +51,16 @@ function HomePage() {
             </div>
             <form id='form' onSubmit={handleSubmit(submitData)} className='flex flex-col gap-2'>
                 <div className='h-fit bg-white rounded-t-lg border-l-10 border-purple-300 p-5 flex flex-col gap-3'>
-                    <Input {...register("name", {required: 'Nama wajib diisi'})} type="text" id="name" label="Siapakah nama Anda?" className='w-full' error={errors.name}/>
+                    <Input {...register("name")} type="text" id="name" label="Siapakah nama Anda?" className='w-full' error={errors.name}/>
                 </div>
                 <div className='h-fit bg-white border-l-10 border-purple-300 p-5 flex flex-col gap-3'>
-                    <Input {...register("age", {required: 'Umur wajib diisi'})} type="number" id="age" label="Berapakah umur Anda?" className='w-full' error={errors.age} min='0'/>
+                    <Input {...register("age")} type="number" id="age" label="Berapakah umur Anda?" className='w-full' error={errors.age} min='0'/>
                 </div>
                 <div className='h-fit bg-white border-l-10 border-purple-300 p-5 flex flex-col gap-3'>
-                    <Input {...register("gender", {required: 'Jenis kelamin harus dipilih salah satu'})} type="radio" id="gender" options={['Laki-laki','Perempuan']} label="Apa jenis kelamin Anda?" className='flex flex-row gap-2 items-center' error={errors.gender}/>
+                    <Input {...register("gender")} type="radio" id="gender" options={['Laki-laki','Perempuan']} label="Apa jenis kelamin Anda?" className='flex flex-row gap-2 items-center' error={errors.gender}/>
                 </div>
                 <div className='h-fit bg-white border-l-10 border-purple-300 p-5 flex flex-col gap-3'>                
-                    <Input {...register("smoker", {required: 'Jawaban pertanyaan ini harus dipilih salah satu'})} type="radio" id="smoker" options={['Ya','Tidak']} label="Apakah Anda perokok?" className='flex flex-row gap-2 items-center' error={errors.smoker}/>
+                    <Input {...register("smoker")} type="radio" id="smoker" options={['Ya','Tidak']} label="Apakah Anda perokok?" className='flex flex-row gap-2 items-center' error={errors.smoker}/>
                 </div>
                 <div className='h-fit bg-white border-l-10 border-purple-300 p-5 flex flex-col gap-3'>
                     <Input {...register("cigar")} type="checkbox" id="cigar" options={['Gudang Garam Filter','Lucky Strike','Marlboro','Esse']} label="Apa merk rokok yang sudah pernah Anda coba?" className='flex flex-row gap-2 items-center' disabled={watchSmoker === 'Tidak'}/>
