@@ -1,21 +1,17 @@
 import React, {useState} from 'react'
 import Input from '../components/Input'
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { addData } from '../redux/reducer/item'
 
 function HomePage() {
   const {register, handleSubmit, watch, formState: { errors }} = useForm()
   const [isSubmitted, setIsSubmitted] = useState(false)
   const watchSmoker = watch('smoker')
+  const dispatch = useDispatch()
 
   function submitData(value) {
-    const sanitizedValue = {
-        ...value,
-        name: value.name.trim(), 
-        cigar: value.smoker === 'Tidak' ? [] : value.cigar || [], 
-    }
-    const formData = JSON.parse(localStorage.getItem('formData')) || []
-    const newData = [...formData, value]
-    localStorage.setItem('formData', JSON.stringify(newData))
+    dispatch(addData(value))
     setIsSubmitted(true)
     setTimeout(() => setIsSubmitted(false), 1000)
     document.getElementById('form').reset()
