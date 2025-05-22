@@ -1,13 +1,17 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { removeData } from '../redux/reducer/item';
+import { removeData, removeItem } from '../redux/reducer/surveyResult';
 
 function Result() {  
-  const data = useSelector(state => state.item.data)
+  const data = useSelector(state => state.surveyResult.data)
   const dispatch = useDispatch()
 
   function remove() {
     dispatch(removeData())
+  }
+
+  function removeRow(value) {
+    dispatch(removeItem(value))
   }
 
   return (
@@ -26,6 +30,7 @@ function Result() {
                         <th className='border-2'>Jenis Kelamin</th>
                         <th className='border-2'>Perokok</th>
                         <th className='border-2'>Merk Rokok</th>
+                        <th className='border-2'>Hapus Data</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,6 +44,9 @@ function Result() {
                             <td className='border-2'>{data.gender}</td>
                             <td className='border-2'>{data.smoker}</td>
                             <td className='border-2'>{cigar}</td>
+                            <td className='border-2 hover:bg-red-100'>
+                                <button type='button' onClick={()=> {removeRow(index)}} className='text-red-500 font-semibold w-full'>Remove</button>
+                            </td>
                             </tr>
                         )
                     })}

@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import Input from '../components/Input'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-import { addData } from '../redux/reducer/item'
+import { addData } from '../redux/reducer/surveyResult'
 
 function HomePage() {
   const {register, handleSubmit, watch, formState: { errors }} = useForm()

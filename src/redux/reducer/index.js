@@ -1,8 +1,8 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import item from './item'
+import surveyResult from './surveyResult'
 
 const reducer = combineReducers({
-    item
+    surveyResult
 })
 
 export default reducer
